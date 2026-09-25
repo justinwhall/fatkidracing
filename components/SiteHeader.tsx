@@ -24,6 +24,9 @@ export function SiteHeader() {
             <Anchor c="gray.3" href="#shop" tt="uppercase" underline="hover">
               Shop
             </Anchor>
+            <Anchor c="gray.3" href="#contact" tt="uppercase" underline="hover">
+              Contact
+            </Anchor>
           </Group>
         </Group>
       </Container>

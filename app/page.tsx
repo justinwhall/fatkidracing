@@ -1,3 +1,4 @@
+import { Contact } from "@/components/Contact";
 import { Hero } from "@/components/Hero";
 import { Manifesto } from "@/components/Manifesto";
 import { Shop } from "@/components/Shop";
@@ -14,6 +15,7 @@ export default async function HomePage() {
       <Hero />
       <Manifesto />
       <Shop products={products} />
+      <Contact />
       <SiteFooter />
     </>
   );
