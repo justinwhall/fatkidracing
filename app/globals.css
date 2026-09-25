@@ -72,3 +72,27 @@ body {
 .section-rule {
   border-top: 1px solid rgb(255 45 155 / 0.22);
 }
+
+.photo-gallery {
+  columns: 1;
+  column-gap: var(--mantine-spacing-lg);
+}
+
+.photo-card {
+  break-inside: avoid;
+  margin-bottom: var(--mantine-spacing-lg);
+  border-color: rgb(255 45 155 / 0.22);
+  background: rgb(17 6 24 / 0.88);
+}
+
+.photo-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 48em) {
+  .photo-gallery {
+    columns: 2;
+  }
+}

@@ -1,10 +1,12 @@
 "use client";
 
-import { Button, Container, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
+import { Badge, Button, Container, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 
+import { createPhotoInquiryMessage } from "@/data/photos";
 import { parseContactPayload } from "@/lib/contact/parse";
 
+import type { Photo } from "@/data/photos";
 import type { FormEvent } from "react";
 
 type SubmitState = "idle" | "sending" | "success" | "error";
@@ -17,10 +19,16 @@ type Web3FormsResponse = {
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 const WEB3FORMS_ACCESS_KEY = "c0562a2f-7227-42a8-afa6-352e869fee3d";
 
-export function Contact() {
+type ContactProps = {
+  readonly selectedPhoto: Photo | undefined;
+};
+
+export function Contact({ selectedPhoto }: ContactProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(
+    selectedPhoto === undefined ? "" : createPhotoInquiryMessage(selectedPhoto),
+  );
   const [botcheck, setBotcheck] = useState("");
   const [status, setStatus] = useState<SubmitState>("idle");
   const [error, setError] = useState("");
@@ -48,7 +56,17 @@ export function Contact() {
     formData.append("email", parsed.fields.email);
     formData.append("message", parsed.fields.message);
     formData.append("name", parsed.fields.name);
-    formData.append("subject", `Fatkid Racing / ${parsed.fields.name}`);
+    formData.append(
+      "subject",
+      selectedPhoto === undefined
+        ? `Fatkid Racing / ${parsed.fields.name}`
+        : `Fatkid Racing / Print: ${selectedPhoto.title}`,
+    );
+
+    if (selectedPhoto !== undefined) {
+      formData.append("print_id", selectedPhoto.id);
+      formData.append("print_name", selectedPhoto.title);
+    }
 
     const response = await fetch(WEB3FORMS_URL, {
       body: formData,
@@ -80,6 +98,11 @@ export function Contact() {
             Merch questions, Crested Butte ride invites, complaints about the
             401. Be brief. Be rude. Be both.
           </Text>
+          {selectedPhoto === undefined ? null : (
+            <Badge color="sunset" size="lg" variant="light">
+              Inquiring about: {selectedPhoto.title}
+            </Badge>
+          )}
           <form onSubmit={(event) => void onSubmit(event)}>
             <Stack gap="sm">
               <TextInput

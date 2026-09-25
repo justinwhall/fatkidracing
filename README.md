@@ -17,6 +17,19 @@ npm test
 npm run build
 ```
 
+## Photo gallery
+
+Keep clean masters in `photos-raw/`; that directory is gitignored. Generate
+watermarked web previews before committing:
+
+```bash
+npm run photos:watermark
+```
+
+The script preserves each photo's aspect ratio, strips metadata, and writes
+compressed previews to `public/photos/`. Add the matching catalog entry in
+`data/photos.ts`. Never put clean full-resolution masters in `public/`.
+
 ## Deploy on Vercel
 
 1. Push this repo to GitHub / GitLab / Bitbucket.
