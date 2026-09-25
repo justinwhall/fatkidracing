@@ -3,14 +3,18 @@
 import { Button, Container, Stack, Text, Textarea, TextInput, Title } from "@mantine/core";
 import { useState } from "react";
 
+import { parseContactPayload } from "@/lib/contact/parse";
+
 import type { FormEvent } from "react";
 
 type SubmitState = "idle" | "sending" | "success" | "error";
 
-type ContactResponse = {
-  readonly error?: string;
-  readonly ok?: boolean;
+type Web3FormsResponse = {
+  readonly message?: string;
+  readonly success?: boolean;
 };
+
+const WEB3FORMS_URL = "https://api.web3forms.com/submit";
 
 export function Contact() {
   const [name, setName] = useState("");
@@ -25,17 +29,44 @@ export function Contact() {
     setStatus("sending");
     setError("");
 
-    const response = await fetch("/api/contact", {
-      body: JSON.stringify({ botcheck, email, message, name }),
-      headers: { "Content-Type": "application/json" },
+    const parsed = parseContactPayload({ botcheck, email, message, name });
+
+    if (parsed.kind === "spam") {
+      setStatus("success");
+      return;
+    }
+
+    if (parsed.kind === "invalid") {
+      setStatus("error");
+      setError(parsed.error);
+      return;
+    }
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (accessKey === undefined || accessKey.length === 0) {
+      setStatus("error");
+      setError("Contact is off the air. Missing form key.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("access_key", accessKey);
+    formData.append("email", parsed.fields.email);
+    formData.append("message", parsed.fields.message);
+    formData.append("name", parsed.fields.name);
+    formData.append("subject", `Fatkid Racing / ${parsed.fields.name}`);
+
+    const response = await fetch(WEB3FORMS_URL, {
+      body: formData,
       method: "POST",
     });
 
-    const data = (await response.json()) as ContactResponse;
+    const data = (await response.json()) as Web3FormsResponse;
 
-    if (!response.ok || data.ok !== true) {
+    if (!response.ok || data.success !== true) {
       setStatus("error");
-      setError(data.error ?? "Something exploded. Try again.");
+      setError(data.message ?? "Web3Forms dropped the baton. Try again.");
       return;
     }
 
@@ -54,11 +85,12 @@ export function Contact() {
           </Title>
           <Text c="gray.3">
             Merch questions, Crested Butte ride invites, complaints about the
-            401. It lands in yo@fatkidracing.party. Be brief. Be rude. Be both.
+            401. Be brief. Be rude. Be both.
           </Text>
           <form onSubmit={(event) => void onSubmit(event)}>
             <Stack gap="sm">
               <TextInput
+                autoComplete="off"
                 name="botcheck"
                 onChange={(event) => {
                   setBotcheck(event.currentTarget.value);
