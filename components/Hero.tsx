@@ -11,12 +11,13 @@ export function Hero() {
             maw={320}
             src="/logo.png"
             w="70%"
+            bdrs='100%'
           />
           <Title className="headline-chrome" fw={400} lh={1.15} order={1} size="clamp(1.7rem, 6vw, 3.4rem)">
-            Too big to aero. Too stubborn to DNF.
+            Too big to aero. Too fat to fail.
           </Title>
           <Text c="gray.3" maw={520} size="lg">
-            Wraparound-shade energy. Party laps. Zero lycra church.
+            The only interval we hit is happy hour. Party laps. Zero lycra church.
           </Text>
           <Button component="a" href="#shop" size="md" tt="uppercase">
             Shop the crimes

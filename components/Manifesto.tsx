@@ -12,8 +12,7 @@ export function Manifesto() {
             No race license. No power meter. No apology.
           </Text>
           <Text c="gray.3">
-            Fatkid Racing is wraparound-shade energy on a bike that should have
-            stayed in the garage. We do not chase KOMs. We chase the afterparty.
+            Fatkid Racing is not your average grape smuggler. We do not chase KOMs. We chase the afterparty.
             If that bothers you, draft someone else.
           </Text>
         </Stack>

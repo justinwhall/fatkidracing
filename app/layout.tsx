@@ -29,14 +29,14 @@ const oswald = Oswald({
 
 export const metadata: Metadata = {
   description:
-    "Wraparound-shade energy. Party laps. Stickers and tees incoming.",
+    "Crested Butte party laps. The only interval we hit is happy hour.",
   icons: {
     icon: "/logo.png",
   },
   metadataBase: new URL("https://fatkidracing.party"),
   openGraph: {
     description:
-      "Too big to aero. Too stubborn to DNF. Stickers and tees incoming.",
+      "Too big to aero. Too fat to fail. Crested Butte party laps.",
     images: ["/logo.png"],
     locale: "en_US",
     siteName: "Fatkid Racing",

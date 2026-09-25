@@ -9,8 +9,8 @@ export function SiteFooter() {
             fatkidracing.party
           </Text>
           <Text c="dimmed" size="sm">
-            Ride stupid. Tip your mechanic. Not a licensed race series. Not your
-            coach. Not sorry.
+            Based in Crested Butte, Colorado. Ride stupid. Tip your mechanic.
+            Not USA Cycling. Not your coach. Not sorry.
           </Text>
         </Stack>
       </Container>
