@@ -20,7 +20,7 @@ npm run build
 ## Deploy on Vercel
 
 1. Push this repo to GitHub / GitLab / Bitbucket.
-2. In Vercel: **Add New… → Project** and import the repo. Framework preset: Next.js. Add `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` (same value as `.env.local`). Web3Forms’ free plan only accepts browser submits, so this key is public by design. Mail goes to whatever inbox you registered the key with.
+2. In Vercel: **Add New… → Project** and import the repo. Framework preset: Next.js. The contact form uses a public Web3Forms access key in the client (required by their free plan). Mail goes to whatever inbox you registered the key with.
 3. After the first deploy, open the project → **Settings → Domains** and add `fatkidracing.party` (and `www` if you use it).
 4. In your domain registrar, add the DNS records Vercel shows (usually an A record to `76.76.21.21` and/or a CNAME for `www`).
 

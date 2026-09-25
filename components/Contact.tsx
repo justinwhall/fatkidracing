@@ -15,6 +15,7 @@ type Web3FormsResponse = {
 };
 
 const WEB3FORMS_URL = "https://api.web3forms.com/submit";
+const WEB3FORMS_ACCESS_KEY = "c0562a2f-7227-42a8-afa6-352e869fee3d";
 
 export function Contact() {
   const [name, setName] = useState("");
@@ -42,16 +43,8 @@ export function Contact() {
       return;
     }
 
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
-
-    if (accessKey === undefined || accessKey.length === 0) {
-      setStatus("error");
-      setError("Contact is off the air. Missing form key.");
-      return;
-    }
-
     const formData = new FormData();
-    formData.append("access_key", accessKey);
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
     formData.append("email", parsed.fields.email);
     formData.append("message", parsed.fields.message);
     formData.append("name", parsed.fields.name);
